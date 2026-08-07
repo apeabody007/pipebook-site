@@ -79,6 +79,18 @@
 
   .note { border-left: 3px solid var(--accent); padding-left: 16px; margin: 16px 0; }
 
+  /* screenshot strip */
+  .shots {
+    display: flex; gap: 16px; overflow-x: auto; margin: 16px -24px 0; padding: 4px 24px 14px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  }
+  .shot { flex: 0 0 auto; width: 208px; scroll-snap-align: start; }
+  .shot img {
+    width: 100%; display: block; border-radius: 14px;
+    border: 1px solid var(--line); background: #000;
+  }
+  .shot span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
   /* bottom bar */
   .bottom {
     margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line);
@@ -114,6 +126,15 @@
     <div class="stat"><b>310/318</b><span>pipe schedule values verified</span></div>
     <div class="stat"><b>174/183</b><span>fitting takeoffs verified</span></div>
     <div class="stat"><b>836/836</b><span>flange &amp; bolt-up values verified</span></div>
+  </div>
+
+  <h2>A look at it</h2>
+  <div class="shots">
+    <figure class="shot"><img src="shots/offset.png" alt="Rolling offset calculator showing true offset, travel, run and the 6-inch cut length" loading="lazy"><span>Travel to cut length, with the takeoffs and your gap already subtracted</span></figure>
+    <figure class="shot"><img src="shots/search.png" alt="Search results for the query 6 90 showing 6-inch takeoffs" loading="lazy"><span>Type “6 90”. Get the 6″ takeoffs.</span></figure>
+    <figure class="shot"><img src="shots/pipe.png" alt="Pipe schedule table for NPS one-half inch" loading="lazy"><span>Wall, ID in decimals and 16ths, weight per foot</span></figure>
+    <figure class="shot"><img src="shots/flange.png" alt="6 inch class 150 flange card with dimensions and bolt-up" loading="lazy"><span>The whole bolt-up on one card, ring number included</span></figure>
+    <figure class="shot"><img src="shots/tape.png" alt="Feet and inches running tape calculator" loading="lazy"><span>Tape math that never loses a 16th</span></figure>
   </div>
 
   <h2>What's in it</h2>
