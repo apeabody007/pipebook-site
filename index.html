@@ -8,57 +8,159 @@
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, system-ui, sans-serif; margin: 0; background: #fff; color: #1c1c1e; }
-  @media (prefers-color-scheme: dark) { body { background: #000; color: #f2f2f7; } }
-  main { max-width: 640px; margin: 0 auto; padding: 48px 24px 64px; }
-  header { background: #173A5B; color: #fff; }
-  .hero { max-width: 640px; margin: 0 auto; padding: 56px 24px; display: flex; align-items: center; gap: 20px; }
-  .hero img { width: 84px; height: 84px; border-radius: 19px; }
-  .hero h1 { margin: 0; font-size: 34px; }
-  .hero p { margin: 4px 0 0; opacity: .85; font-size: 17px; }
-  h2 { font-size: 22px; margin-top: 36px; }
+  :root {
+    color-scheme: light dark;
+    --navy: #173A5B;
+    --accent: #1E4E79;
+    --link: #2C6296;
+    --bg: #fff;
+    --fg: #1c1c1e;
+    --muted: #5c5f66;
+    --card: #f5f6f8;
+    --line: #e3e5e9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000; --fg: #f2f2f7; --muted: #a1a4ab;
+      --card: #16181c; --line: #2a2d33; --link: #6BA6DC;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    margin: 0; background: var(--bg); color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--link); }
+
+  /* hero */
+  header { background: var(--navy); color: #fff; padding: 52px 0 44px; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 76px; height: 76px; border-radius: 17px; flex-shrink: 0; }
+  .brand h1 { margin: 0; font-size: 32px; letter-spacing: -0.5px; }
+  .brand p { margin: 5px 0 0; font-size: 16px; opacity: .82; }
+  .pitch { margin: 26px 0 0; font-size: 22px; font-weight: 600; line-height: 1.35; }
+  .cta {
+    display: inline-block; margin-top: 22px; background: #fff; color: var(--navy);
+    font-weight: 700; font-size: 18px; padding: 15px 28px; border-radius: 12px;
+    text-decoration: none;
+  }
+  .price { margin: 14px 0 0; font-size: 15px; opacity: .82; }
+
+  /* stats */
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 0; }
+  .stat {
+    flex: 1 1 170px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .stat b { display: block; font-size: 21px; font-variant-numeric: tabular-nums; }
+  .stat span { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  h2 { font-size: 20px; margin: 42px 0 10px; }
   p, li { font-size: 17px; line-height: 1.55; }
-  a { color: #3D7CB8; }
-  .tag { font-weight: 600; }
-  nav { margin-top: 28px; font-size: 17px; }
-  nav a { margin-right: 20px; }
-  footer { max-width: 640px; margin: 0 auto; padding: 0 24px 48px; font-size: 14px; opacity: .6; }
+  .lead { color: var(--muted); }
+
+  /* feature grid */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .col {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px 18px;
+  }
+  .col h3 {
+    margin: 0 0 10px; font-size: 13px; letter-spacing: .6px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .col ul { margin: 0; padding-left: 18px; }
+  .col li { font-size: 15.5px; line-height: 1.5; margin-bottom: 5px; }
+  .col li:last-child { margin-bottom: 0; }
+  .col .std { color: var(--muted); font-size: 13px; }
+
+  .note { border-left: 3px solid var(--accent); padding-left: 16px; margin: 16px 0; }
+
+  /* bottom bar */
+  .bottom {
+    margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line);
+    display: flex; gap: 22px; align-items: center; flex-wrap: wrap;
+  }
+  .bottom img { width: 104px; height: 104px; border-radius: 10px; background: #fff; padding: 6px; }
+  .bottom div { flex: 1 1 240px; }
+  .bottom p { margin: 0 0 6px; font-size: 15px; color: var(--muted); }
+  nav a { margin-right: 18px; font-size: 15px; }
+  footer { padding: 30px 0 52px; font-size: 14px; color: var(--muted); }
 </style>
 </head>
 <body>
+
 <header>
-  <div class="hero">
-    <img src="icon.png" alt="PipeBook icon — flange face">
-    <div>
-      <h1>PipeBook</h1>
-      <p>The pipefitter's pocket reference &amp; field calculator</p>
+  <div class="wrap">
+    <div class="brand">
+      <img src="icon.png" alt="PipeBook icon — flange face">
+      <div>
+        <h1>PipeBook</h1>
+        <p>The pipefitter's pocket reference &amp; field calculator</p>
+      </div>
     </div>
+    <p class="pitch">Buy it once. Works with no signal.<br>Never loses features.</p>
+    <a class="cta" href="https://apps.apple.com/us/app/pipebook-pipefitter-reference/id6795305963">Download on the App&nbsp;Store</a>
+    <p class="price">$12.99 one-time · no subscription · no ads · no account</p>
   </div>
 </header>
-<main>
-  <p class="tag">Buy it once. Works with no signal. Never loses features.</p>
-  <p>Pipe schedules, fitting takeoffs, flange and stud charts, and fraction-native
-  calculators for rolling offsets, miters, parallel runs, and cut lengths. Every
-  dimension is extracted from two independent published sources, machine-compared,
-  and hand-resolved against a third before it ships.</p>
-  <p>No ads. No subscription. No accounts. Fully offline.</p>
-  <h2>Get PipeBook</h2>
-  <p>On the App Store now. One-time purchase, $12.99. Yours forever.</p>
-  <p><a href="https://apps.apple.com/us/app/pipebook-pipefitter-reference/id6795305963"
-    style="display:inline-block; background:#1E4E79; color:#fff; font-weight:600;
-    font-size:18px; padding:14px 26px; border-radius:12px; text-decoration:none;">
-    Download on the App Store</a></p>
-  <p>On a computer? Scan this with your phone's camera:</p>
-  <img src="appstore-qr.png" alt="QR code for PipeBook on the App Store"
-       style="width: 200px; max-width: 100%; border-radius: 12px; background: #fff; padding: 8px;">
-  <p>If a number ever looks wrong, <a href="support/">tell me first</a>:
-  accuracy reports jump the line, and fixes ship to everyone.</p>
-  <nav>
-    <a href="support/">Support</a>
-    <a href="privacy/">Privacy policy</a>
-  </nav>
+
+<main class="wrap">
+
+  <div class="stats">
+    <div class="stat"><b>310/318</b><span>pipe schedule values verified</span></div>
+    <div class="stat"><b>174/183</b><span>fitting takeoffs verified</span></div>
+    <div class="stat"><b>836/836</b><span>flange &amp; bolt-up values verified</span></div>
+  </div>
+
+  <h2>What's in it</h2>
+  <div class="grid">
+    <div class="col">
+      <h3>Reference</h3>
+      <ul>
+        <li>Pipe schedules, NPS 1/8 to 48 — wall, ID in decimals and 16ths, weight per foot <span class="std">(B36.10M / B36.19M)</span></li>
+        <li>Fitting takeoffs — 90s and 45s, LR and SR, tees, reducers, caps, stub ends <span class="std">(B16.9)</span></li>
+        <li>Flanges, classes 150/300/600 — dims plus the full bolt-up: stud count, diameter, length RF and RTJ, ring numbers <span class="std">(B16.5 / B16.20)</span></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Calculators</h3>
+      <ul>
+        <li>Rolling offset — set, roll, travel, run, and end-to-end cut length with real takeoffs and your welder's gap</li>
+        <li>Cut a fitting — any angle from a factory 90, with heel, centerline, and throat marks</li>
+        <li>Miter cuts — cut angle, cutback, segment lengths</li>
+        <li>Parallel offset — equal-spread runs through a turn</li>
+        <li>Feet &amp; inches — running tape math that never loses a 16th</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Where the numbers come from</h2>
+  <p class="lead">Every dimension is extracted from two independent published sources, machine-compared, and hand-resolved against a third before it ships. The handful of values that haven't cleared that process are marked in the app, in plain sight, rather than quietly shipped.</p>
+  <div class="note">
+    <p style="margin:0">If a number ever looks wrong to you, <a href="support/">say so first</a>. Accuracy reports jump the line, get checked against the standards, and the fix ships to everyone — usually the same day.</p>
+  </div>
+
+  <h2>Built for the field</h2>
+  <p class="lead">Fully offline: no sign-in, no license check, nothing to time out in a basement or on a right-of-way. Fraction-first display, big targets that work with gloves on, an optional keep-awake for open tables, and a share button that sends your welder the cut with the diagram attached.</p>
+
+  <div class="bottom">
+    <img src="appstore-qr.png" alt="QR code for PipeBook on the App Store">
+    <div>
+      <p>On a computer? Scan with your phone's camera.</p>
+      <nav>
+        <a href="support/">Support</a>
+        <a href="privacy/">Privacy policy</a>
+      </nav>
+    </div>
+  </div>
+
 </main>
-<footer>Built in the U.S.A. by one developer who answers email.</footer>
+
+<footer class="wrap">Built in the U.S.A. by one developer who answers email.</footer>
+
 </body>
 </html>
